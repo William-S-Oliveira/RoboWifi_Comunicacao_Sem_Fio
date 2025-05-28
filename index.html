@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle do Robô</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .controle {
+            display: grid;
+            grid-template-areas:
+                ". cima ."
+                "esquerda centro direita"
+                ". baixo ."
+                ". parar .";
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .controle button {
+            width: 80px;
+            height: 80px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            background-color: #111;
+            color: #00ff00;
+            box-shadow: 0 0 5px #00ff00;
+            cursor: pointer;
+        }
+
+        .controle button:hover {
+            background-color: #222;
+        }
+
+        .cima     { grid-area: cima; }
+        .baixo    { grid-area: baixo; }
+        .esquerda { grid-area: esquerda; }
+        .direita  { grid-area: direita; }
+        .parar    { grid-area: parar; width: 100%; height: 60px; }
+
+        .centro {
+            grid-area: centro;
+            background: none;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Controle do Robô</h1>
+    <div class="controle">
+        <button class="cima" onclick="mover('frente')">↑</button>
+        <button class="esquerda" onclick="mover('esquerda')">←</button>
+        <button class="direita" onclick="mover('direita')">→</button>
+        <button class="baixo" onclick="mover('tras')">↓</button>
+        <div class="centro"></div>
+        <button class="parar" onclick="mover('parar')">PARAR</button>
+    </div>
+
+    <script>
+        function mover(direcao) {
+            fetch('/move', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'direcao=' + direcao
+            });
+        }
+    </script>
+</body>
+</html>
